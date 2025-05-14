@@ -31,16 +31,21 @@ app.use('/api/predict', predictRouter);
 wss.on('connection', (ws) => {
     console.log('Client connected:', ws._socket.remoteAddress);
 
-    const intervalId = setInterval(() => {
-        const healthData = {
-            spo2: Math.floor(95 + Math.random() * 5),
-            pulse: Math.floor(70 + Math.random() * 10),
-            respiratoryRate: Math.floor(12 + Math.random() * 6),
-            ecg: (Math.random() * 2 - 1).toFixed(2),
-            gsr: (Math.random() * 100).toFixed(2),
-        };
-        ws.send(JSON.stringify(healthData));
-    }, 5000);
+    ws.on('message', (message) => {
+        try {
+            const data = JSON.parse(message);
+            console.log('Received from wearable:', data);
+
+            wss.clients.forEach(client => {
+                if (client !== ws && client.readyState === 1) {
+                    client.send(JSON.stringify(data));
+                }
+            });
+        } catch (err) {
+            console.error('WebSocket JSON parse error:', err);
+        }
+    });
+
 
     ws.on('close', () => {
         clearInterval(intervalId);
