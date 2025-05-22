@@ -1,11 +1,17 @@
 import express from 'express';
-import authMiddleware from '../middlewares/auth.js';
-import { checkWearableConnection, connectWearableDevice, getWearableData } from '../controllers/wearableController.js';
+import { 
+    connectWearableDevice, 
+    checkWearableConnection, 
+    getWearableData,
+    receiveWearableData  
+} from '../controllers/wearableController.js';
+import authMiddleware from './../middlewares/auth.js';
 
-const route = express.Router()
+const wearableRouter = express.Router();
+wearableRouter.post('/connect', authMiddleware, connectWearableDevice);
+wearableRouter.get('/status', authMiddleware, checkWearableConnection);
+wearableRouter.get('/getdata', authMiddleware, getWearableData);
 
-route.get('/getdata', authMiddleware, getWearableData)
-route.post('/connect', authMiddleware, connectWearableDevice)
-route.get('/status', authMiddleware, checkWearableConnection);
+wearableRouter.post('/wearabledata', receiveWearableData);
 
-export default route
+export default wearableRouter;

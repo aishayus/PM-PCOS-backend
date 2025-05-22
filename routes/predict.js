@@ -46,7 +46,7 @@ route.get('/result', authMiddleware, async (req, res) => {
             'Hair loss(Y/N)': symptoms.hairLoss ? 1 : 0,
             'Pimples(Y/N)': symptoms.pimples ? 1 : 0,
             'Fast food (Y/N)': symptoms.fastFoods ? 1 : 0,
-            'Cycle length(days)': averageCycleLength(info.cycleLength),
+            'Cycle length(days)': averageCycleLength(symptoms.cycleLength),
             'Pregnant(Y/N)': symptoms.pregnancy ? 1 : 0,
         }
 
