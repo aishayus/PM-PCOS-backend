@@ -42,12 +42,6 @@ const wearableSchema = new Schema({
         type: Boolean,
         default: false
     },
-    // Additional fields for better tracking
-    deviceId: {
-        type: String,
-        required: false,
-        default: 'unknown'
-    },
     sessionId: {
         type: String,
         required: false

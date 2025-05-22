@@ -11,7 +11,6 @@ const wearableRouter = express.Router();
 wearableRouter.post('/connect', authMiddleware, connectWearableDevice);
 wearableRouter.get('/status', authMiddleware, checkWearableConnection);
 wearableRouter.get('/getdata', authMiddleware, getWearableData);
-
 wearableRouter.post('/wearabledata', receiveWearableData);
 
 export default wearableRouter;

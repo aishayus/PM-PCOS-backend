@@ -8,7 +8,6 @@ export const connectWearableDevice = async (req, res) => {
     try {
         const userId = req.userId;
         
-        // Instead of creating a new record, update or create existing record
         const connectionRecord = await wearableModel.findOneAndUpdate(
             { user: userId },
             {
@@ -186,7 +185,6 @@ export const receiveWearableData = async (req, res) => {
     }
 };
 
-// Clean up old sessions (optional utility function)
 export const cleanupSessions = () => {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
     for (const [sessionId, session] of connectionSessions.entries()) {
